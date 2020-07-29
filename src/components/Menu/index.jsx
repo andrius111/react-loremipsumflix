@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import Logo from '../../assets/img/logo.png'
 import Button from '../Button'
@@ -7,16 +8,16 @@ import './style.css'
 
 const Menu = () => {
 	return (
-		<nav className="Menu">
-      <a href="/">
+		<nav className='Menu'>
+      <Link to="/">
         <img
-          alt="Logo" 
-          className="Logo"
+          alt='Logo' 
+          className='Logo'
           src={ Logo } 
         />
-      </a>
+      </Link>
 
-      <Button href="/">
+      <Button as={ Link } to='/new/video'>
         Novo Vídeo
       </Button>
 		</nav>
