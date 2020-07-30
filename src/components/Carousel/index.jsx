@@ -3,7 +3,7 @@ import React from 'react'
 import Slider, { SliderItem } from './components/Slider'
 import VideoCard from './components/VideoCard'
 
-import { VideoCardGroupContainer, VideoCardList, Title, ExtraLink } from './styles'
+import { VideoCardGroupContainer, Title, ExtraLink } from './styles'
 
 const Carousel = ({ ignoreFirstVideo, category }) => {
   const categoryTitle = category.titulo
