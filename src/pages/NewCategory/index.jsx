@@ -1,84 +1,97 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import Template from '../../components/Template'
-import FormField from '../../components/FormField'
+import Template from '../../components/Template';
+import FormField from '../../components/FormField';
+import Button from '../../components/Button';
 
 const NewCategory = () => {
   const initialData = {
     name: '',
     description: '',
-    color: '#000'
-  }
+    color: '#000',
+  };
 
-  const [categorys, setCategorys] = useState([])
-  const [formValues, setFormValues] = useState(initialData)
+  const [categorys, setCategorys] = useState([]);
+  const [formValues, setFormValues] = useState(initialData);
 
   const setValues = (input, value) => {
     setFormValues({
-      ...formValues, 
-      [input]: value
-    })
-  }
+      ...formValues,
+      [input]: value,
+    });
+  };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setValues(
-      event.target.getAttribute('name'), 
-      event.target.value
-    )
-  }
+      event.target.getAttribute('name'),
+      event.target.value,
+    );
+  };
 
-  const handleSubmit = event => {
-    event.preventDefault()
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    setCategorys([...categorys, formValues])
-    setFormValues(initialData)
-  }
+    setCategorys([...categorys, formValues]);
+    setFormValues(initialData);
+  };
+
+  useEffect(() => {
+    const URL = 'http://localhost:8080/categorys';
+
+    fetch(URL).then(async (response) => {
+      const data = await response.json();
+
+      setCategorys([
+        ...data,
+      ]);
+    });
+  }, []);
 
   return (
     <Template>
       <h1>Cadastro de Categoria</h1>
 
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={handleSubmit}>
 
-        <FormField 
-          label='Nome da Categoria'
-          type='text'
-          name='name'
-          value={ formValues.name }
-          handleChange={ handleChange } 
+        <FormField
+          label="Nome da Categoria"
+          type="text"
+          name="name"
+          value={formValues.name}
+          handleChange={handleChange}
         />
 
-        <FormField 
-          label='Descrição'
-          type='textarea'
-          name='description'
-          value={ formValues.description }
-          handleChange={ handleChange } 
+        <FormField
+          label="Descrição"
+          type="textarea"
+          name="description"
+          value={formValues.description}
+          handleChange={handleChange}
         />
 
-        <FormField 
-          label='Cor'
-          type='color'
-          name='color'
-          value={ formValues.color }
-          handleChange={ handleChange } 
+        <FormField
+          label="Cor"
+          type="color"
+          name="color"
+          value={formValues.color}
+          handleChange={handleChange}
         />
 
-        <button>
+        <Button type="submit">
           Cadastrar
-        </button>
+        </Button>
       </form>
 
       <ul>
-        { categorys.map((category, index) => <li key={ index }>{ category.name }</li>) }
+        { categorys.map((category) => <li key={category.name}>{ category.name }</li>) }
       </ul>
 
-      <Link to='/'>
+      <Link to="/">
         Ir para Home
       </Link>
     </Template>
-  )
-}
+  );
+};
 
-export default NewCategory
+export default NewCategory;
