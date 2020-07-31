@@ -37,7 +37,9 @@ const NewCategory = () => {
   };
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorys';
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorys'
+      : 'https://atuaflix.herokuapp.com/categorys';
 
     fetch(URL).then(async (response) => {
       const data = await response.json();
