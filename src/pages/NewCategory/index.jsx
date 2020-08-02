@@ -67,7 +67,7 @@ const NewCategory = () => {
           handleChange={handleChange}
         />
 
-        <Button type="submit">
+        <Button type="submit" style={{ backgroundColor: '#000' }}>
           Cadastrar
         </Button>
       </form>

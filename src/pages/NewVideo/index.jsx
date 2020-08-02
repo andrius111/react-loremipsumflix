@@ -13,7 +13,7 @@ const NewVideo = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const categoryTitles = categories.map(({ titulo }) => titulo);
-  const { handleChange, formValues } = useForm({
+  const { formValues, handleChange } = useForm({
     titulo: '',
     url: '',
     categoria: '',
@@ -54,21 +54,21 @@ const NewVideo = () => {
           label="Título do Vídeo"
           name="titulo"
           value={formValues.titulo}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
 
         <FormField
           label="URL"
           name="url"
           value={formValues.url}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
 
         <FormField
           label="Categoria"
           name="categoria"
           value={formValues.categoria}
-          onChange={handleChange}
+          handleChange={handleChange}
           suggestions={categoryTitles}
         />
 

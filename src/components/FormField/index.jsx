@@ -72,7 +72,7 @@ const Input = styled.input`
 `;
 
 const FormField = ({
-  label, name, type, value, handleChange, suggestions,
+  label, name, type, value, handleChange, suggestions, required,
 }) => {
   const fiedID = `id_${name}`;
   const tag = type === 'textarea' ? 'textarea' : 'input';
@@ -91,6 +91,7 @@ const FormField = ({
           hasValue={hasValue}
           value={value}
           onChange={handleChange}
+          required={required}
           autoComplete={hasSuggestions ? 'off' : 'on'}
           list={hasSuggestions ? `suggestionFor_${fiedID}` : undefined}
         />
@@ -121,6 +122,7 @@ FormField.defaultProps = {
   value: '',
   handleChange: () => {},
   suggestions: [''],
+  required: true,
 };
 
 FormField.propTypes = {
@@ -130,6 +132,7 @@ FormField.propTypes = {
   value: PropTypes.string,
   handleChange: PropTypes.func,
   suggestions: PropTypes.arrayOf(PropTypes.string),
+  required: PropTypes.bool,
 };
 
 export default FormField;
