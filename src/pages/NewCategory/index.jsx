@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useForm from '../../hooks/useForm';
 
 import Template from '../../components/Template';
 import FormField from '../../components/FormField';
@@ -13,33 +14,19 @@ const NewCategory = () => {
   };
 
   const [categorys, setCategorys] = useState([]);
-  const [formValues, setFormValues] = useState(initialData);
-
-  const setValues = (input, value) => {
-    setFormValues({
-      ...formValues,
-      [input]: value,
-    });
-  };
-
-  const handleChange = (event) => {
-    setValues(
-      event.target.getAttribute('name'),
-      event.target.value,
-    );
-  };
+  const { formValues, handleChange, clearForm } = useForm(initialData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     setCategorys([...categorys, formValues]);
-    setFormValues(initialData);
+    clearForm();
   };
 
   useEffect(() => {
     const URL = window.location.hostname.includes('localhost')
-      ? 'http://localhost:8080/categorys'
-      : 'https://atuaflix.herokuapp.com/categorys';
+      ? 'http://localhost:8080/categorias'
+      : 'https://atuaflix.herokuapp.com/categorias';
 
     fetch(URL).then(async (response) => {
       const data = await response.json();
@@ -86,7 +73,7 @@ const NewCategory = () => {
       </form>
 
       <ul>
-        { categorys.map((category) => <li key={category.name}>{ category.name }</li>) }
+        { categorys.map((category) => <li key={category.titulo}>{ category.titulo }</li>) }
       </ul>
 
       <Link to="/">

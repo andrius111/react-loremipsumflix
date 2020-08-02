@@ -1,8 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
-import Menu from '../Menu'
-import Footer from '../Footer'
+import Menu from '../Menu';
+import Footer from '../Footer';
 
 const Main = styled.main`
   background-color: var(--black);
@@ -11,20 +12,31 @@ const Main = styled.main`
   padding-top: 50px;
   padding-left: 5%;
   padding-right: 5%;
-` 
+  ${({ paddingAll }) => paddingAll >= 0 && css`
+    padding: ${paddingAll};
+  `}
+`;
 
-const Template = (props) => {
-  return (
-    <React.Fragment>
-      <Menu />
+const Template = ({ children, paddingAll }) => (
+  <>
+    <Menu />
 
-      <Main>
-        { props.children }
-      </Main>
+    <Main paddingAll={paddingAll}>
+      { children }
+    </Main>
 
-      <Footer />
-    </React.Fragment>
-  )
-}
+    <Footer />
+  </>
+);
 
-export default Template
+Template.defaultProps = {
+  paddingAll: -1,
+};
+
+Template.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
+  paddingAll: PropTypes.number,
+};
+
+export default Template;

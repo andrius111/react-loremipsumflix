@@ -1,27 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Logo from '../../assets/img/logo.png'
-import Button from '../Button'
+import Logo from '../../assets/img/logo.png';
+import Button from '../Button';
 
-import './style.css'
+import './style.css';
 
-const Menu = () => {
-	return (
-		<nav className='Menu'>
-      <Link to="/">
-        <img
-          alt='Logo' 
-          className='Logo'
-          src={ Logo } 
-        />
-      </Link>
+const Menu = () => (
+  <nav className="Menu">
+    <Link to="/">
+      <img
+        alt="Logo"
+        className="Logo"
+        src={Logo}
+      />
+    </Link>
 
-      <Button as={ Link } to='/new/video'>
-        Novo Vídeo
-      </Button>
-		</nav>
-	)
-}
+    <Button as={Link} to="/new/video">
+      Novo Vídeo
+    </Button>
+  </nav>
+);
 
-export default Menu
+export default Menu;

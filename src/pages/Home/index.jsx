@@ -1,41 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
-import InitialData from '../../data/initial_data.json'
+import categoryRepository from '../../repositories/category';
 
-import Menu from '../../components/Menu'
-import BannerMain from '../../components/BannerMain'
-import Carousel from '../../components/Carousel'
-import Footer from '../../components/Footer'
+import Template from '../../components/Template';
+import BannerMain from '../../components/BannerMain';
+import Carousel from '../../components/Carousel';
 
 const Home = () => {
+  const [InitialData, setInititalData] = useState([]);
+
+  useEffect(() => {
+    categoryRepository.getAllWithVideos()
+      .then((categoriesWithVideos) => {
+        setInititalData(categoriesWithVideos);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-alert
+        alert(error.message);
+      });
+  }, []);
+
   return (
-    <div style={{ background: '#141414' }}>
-      <Menu />
+    <Template paddingAll={0}>
+      {InitialData.length === 0 && (<div>Carregando...</div>)}
 
-      <BannerMain
-        videoTitle={ InitialData.categorias[0].videos[0].titulo }
-        url={ InitialData.categorias[0].videos[0].url }
-        videoDescription={ 'O que é Front-end? Trabalhando na área os termos HTML, CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores. Mas o que eles fazem, afinal? Descubra com a Vanessa!' }
-      />
+      {InitialData.map((category, index) => {
+        if (index === 0) {
+          return (
+            <div key={category.id}>
+              <BannerMain
+                videoTitle={category.videos[0].titulo}
+                url={category.videos[0].url}
+                videoDescription={category.videos[0].titulo}
+              />
 
-      <Carousel
-        ignoreFirstVideo
-        category={ InitialData.categorias[0] }
-      />
+              <Carousel
+                ignoreFirstVideo
+                category={category}
+              />
+            </div>
+          );
+        }
 
-      <Carousel category={ InitialData.categorias[1] } />
+        return (
+          <Carousel
+            key={category.id}
+            category={category}
+          />
+        );
+      })}
+      ;
+    </Template>
+  );
+};
 
-      <Carousel category={ InitialData.categorias[2] } />      
-
-      <Carousel category={ InitialData.categorias[3] } />      
-
-      <Carousel category={ InitialData.categorias[4] } />      
-
-      <Carousel category={ InitialData.categorias[5] } />      
-
-      <Footer />
-    </div>
-  )
-}
-
-export default Home
+export default Home;
